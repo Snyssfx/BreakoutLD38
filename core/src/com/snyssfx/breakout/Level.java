@@ -40,6 +40,7 @@ public class Level implements Disposable {
 
     public Level(Vector2 pos, String levelName, Vector2 size, Color color){
         position = pos;
+        this.size = new Vector2(size);
         b2world = new World(Vector2.Zero, false);
         b2world.setContactListener(new NewContactListener());
         blocks = new Array<Block>();
@@ -47,9 +48,8 @@ public class Level implements Disposable {
         playerRed = new PlayerRed(size.cpy().scl(0.5f).sub(Constants.BLOCKSIZE).sub(0, size.y / 2), this);
         ballBlue = new BallBlue(size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE.scl(3.0f)), this);
 
-        makeBound();
-
         blocks.add(new Block(Color.GREEN, 0, 0, this, Vector2.Zero));
+        makeBound();
         //pos.scl(size);
         pixmap = new Pixmap(
                 (int) ((size.x) * Constants.PXPERMETER),
@@ -83,10 +83,10 @@ public class Level implements Disposable {
 
     public void makeBound(){
         bounds = new Array<Bound>();
-        bounds.add(new Bound(position.cpy().sub(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
-        bounds.add(new Bound(position.cpy().add(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
-        bounds.add(new Bound(position.cpy().sub(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
-        bounds.add(new Bound(position.cpy().add(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
+        bounds.add(new Bound(Vector2.Zero.cpy().sub(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
+        bounds.add(new Bound(Vector2.Zero.cpy().add(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
+        bounds.add(new Bound(Vector2.Zero.cpy().sub(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
+        bounds.add(new Bound(Vector2.Zero.cpy().add(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
     }
 
     public void Render(SpriteBatch batch){
