@@ -54,7 +54,7 @@ public class ParentRectangle {
         {//physics part
             BodyDef def = new BodyDef();
             def.type = type;
-            def.position.set(localPosition);
+            def.position.set(getGlobalPosition());
             body = parentLevel.b2world.createBody(def);
             {
                 FixtureDef fdef = new FixtureDef();

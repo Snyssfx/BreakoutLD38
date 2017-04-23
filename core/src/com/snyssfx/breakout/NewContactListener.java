@@ -26,5 +26,12 @@ public class NewContactListener implements ContactListener {
     @Override
     public void postSolve (Contact contact, ContactImpulse impulse){
 
+        Object bA = contact.getFixtureA().getBody().getUserData();
+        if (bA.getClass().toString().equals("Block"))
+            ((Block)bA).setActive(false);
+
+        Object bB = contact.getFixtureA().getBody().getUserData();
+        if (bB.getClass().toString().equals("Block"))
+            ((Block)bB).setActive(false);
     }
 }

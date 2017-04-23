@@ -12,9 +12,13 @@ public class Constants {
     public static final Vector2 PLAYER_SIZE_ON_START = new Vector2(0.05f, 0.2f);
     public static final Vector2 BALL_SIZE = new Vector2(0.05f, 0.05f);
 
+    public static final Vector2 LEVEL_1_SIZE = new Vector2(4.0f, 2.0f);
+
+
+
+
     public static final float PXPERMETER = 10 / BLOCKSIZE.x;
     public static final float METERPERPX = 1f / PXPERMETER;
-
 
     public static final float EPS = BLOCKSIZE.x / 10f;
 

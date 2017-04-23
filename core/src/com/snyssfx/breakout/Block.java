@@ -16,7 +16,6 @@ public class Block extends ParentRectangle {
     public boolean isActive;
 
     public Block(Color color, int x, int y
-            , World b2world
             , Level pLevel
             , Vector2 localPosition)
     {
