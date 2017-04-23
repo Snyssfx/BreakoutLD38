@@ -2,6 +2,7 @@ package com.snyssfx.breakout.Ball;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.snyssfx.breakout.Constants;
 import com.snyssfx.breakout.Level;
 
 /**
@@ -12,5 +13,6 @@ public class BallRed extends Ball{
 
     public BallRed(Vector2 locPos, Level pLevel){
         super(locPos, pLevel, Color.RED);
+        body.applyForceToCenter(-Constants.BALL_SPEED, 0, true);
     }
 }

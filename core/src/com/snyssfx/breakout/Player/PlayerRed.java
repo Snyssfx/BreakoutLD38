@@ -14,6 +14,7 @@ public class PlayerRed extends Player{
 
     public PlayerRed(Vector2 locPos, Level pLevel){
         super(locPos, pLevel, Color.RED);
+        Gdx.app.log(TAG, getGlobalPosition() + "");
     }
 
     @Override

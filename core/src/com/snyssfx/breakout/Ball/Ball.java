@@ -1,5 +1,6 @@
 package com.snyssfx.breakout.Ball;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,6 +16,14 @@ public abstract class Ball extends ParentRectangle {
 
     public Ball(Vector2 locPos, Level pLevel, Color color){
         super(locPos, pLevel, Constants.BALL_SIZE, color, BodyDef.BodyType.DynamicBody);
+        body.setFixedRotation(true);
+        body.getFixtureList().get(0).setRestitution(1.0f);
+        body.setBullet(true);
+        //Gdx.app.debug(TAG,);
+    }
+
+    public void Update(float delta){
+        localPosition = body.getPosition();
     }
 
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
+
 /**
  * Created by Snyss on 4/23/2017.
  */
@@ -40,7 +41,7 @@ public class ParentRectangle {
         this.screenSize = new Vector2(screenSize);
 
         {//screen part
-            localPosition.scl(screenSize);
+            //localPosition.scl(screenSize);
             pixmap = new Pixmap(
                     (int) ((screenSize.x) * Constants.PXPERMETER),
                     (int) ((screenSize.y) * Constants.PXPERMETER),
@@ -54,15 +55,15 @@ public class ParentRectangle {
         {//physics part
             BodyDef def = new BodyDef();
             def.type = type;
-            def.position.set(getGlobalPosition());
+            def.position.set(localPosition);
             body = parentLevel.b2world.createBody(def);
             {
                 FixtureDef fdef = new FixtureDef();
                 fdef.density = Constants.DENSITY;
                 PolygonShape polygonShape = new PolygonShape();
                 polygonShape.setAsBox(
-                        Constants.BLOCKSIZE.x / 2 - Constants.EPS,
-                        Constants.BLOCKSIZE.y / 2 - Constants.EPS
+                        screenSize.x / 2 - Constants.EPS,
+                        screenSize.y / 2 - Constants.EPS
                 );
                 fdef.shape = polygonShape;
                 body.createFixture(fdef);
@@ -81,8 +82,8 @@ public class ParentRectangle {
 
     public void render(SpriteBatch render) {
         render.draw(tex,
-                body.getPosition().x - tex.getWidth() / 2 * Constants.METERPERPX,
-                body.getPosition().y - tex.getHeight() / 2 * Constants.METERPERPX,
+                parentLevel.position.x + body.getPosition().x - tex.getWidth() / 2 * Constants.METERPERPX,
+                parentLevel.position.y + body.getPosition().y - tex.getHeight() / 2 * Constants.METERPERPX,
                 tex.getWidth() / 2 * Constants.METERPERPX,
                 tex.getHeight() / 2 * Constants.METERPERPX,
                 tex.getWidth() * Constants.METERPERPX,

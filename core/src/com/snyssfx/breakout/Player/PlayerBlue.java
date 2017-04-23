@@ -14,6 +14,7 @@ public class PlayerBlue extends Player {
 
     public PlayerBlue(Vector2 locPos, Level pLevel){
         super(locPos, pLevel, Color.BLUE);
+        Gdx.app.log(TAG, getGlobalPosition() + "");
     }
 
     @Override

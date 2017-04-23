@@ -23,18 +23,21 @@ public abstract class Player extends ParentRectangle {
     public Player(Vector2 locPos, Level pLevel, Color color){
         super(locPos, pLevel, Constants.PLAYER_SIZE_ON_START, color, BodyDef.BodyType.KinematicBody);
         move = Move.NONE;
+        body.getFixtureList().get(0).setRestitution(1.0f);
     }
 
     public abstract void updateMove();
 
     public void Update(float delta){
+        updateMove();
         if (move == Move.NONE)
-            return;
+            body.setLinearVelocity(Vector2.Zero);
         if (move == Move.UP)
             body.setLinearVelocity(0, Constants.PLAYER_VELOCITY * delta);
         if (move == Move.DOWN)
             body.setLinearVelocity(0, -Constants.PLAYER_VELOCITY * delta);
         localPosition = body.getPosition();
     }
+
 
 }
