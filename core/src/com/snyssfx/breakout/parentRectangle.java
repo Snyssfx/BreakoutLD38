@@ -14,9 +14,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 /**
  * Created by Snyss on 4/23/2017.
  */
-public class parentRectangle {
+public class ParentRectangle {
+
+    public static final String TAG = ParentRectangle.class.getName();
+
     public Vector2 localPosition;
-    public Vector2 globalPosition;
+    //public Vector2 globalPosition;
     public Level parentLevel;
     public Color color;
     public Vector2 screenSize;
@@ -24,7 +27,7 @@ public class parentRectangle {
     public Pixmap pixmap;
     public Texture tex;
 
-    public parentRectangle(Vector2 locPos
+    public ParentRectangle(Vector2 locPos
             , Level pLevel
             , Vector2 screenSize
             , Color color
@@ -32,7 +35,7 @@ public class parentRectangle {
     {
         this.localPosition = new Vector2(locPos);
         this.parentLevel = pLevel;
-        this.globalPosition = localPosition + pLevel.position;
+        //this.globalPosition = localPosition.add(pLevel.position);
         this.color = color;
         this.screenSize = new Vector2(screenSize);
 
@@ -73,7 +76,7 @@ public class parentRectangle {
         return localPosition;
     }
     public final Vector2 getGlobalPosition(){
-        return globalPosition;
+        return localPosition.add(parentLevel.position);
     }
 
     public void render(SpriteBatch render) {
