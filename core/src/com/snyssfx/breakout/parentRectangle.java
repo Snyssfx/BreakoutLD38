@@ -60,17 +60,22 @@ public class ParentRectangle {
                 FixtureDef fdef = new FixtureDef();
                 fdef.density = Constants.DENSITY;
                 fdef.restitution = 1.0f;
-                PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(
-                        screenSize.x / 2 - Constants.EPS,
-                        screenSize.y / 2 - Constants.EPS
-                );
+                PolygonShape polygonShape = createShape();
                 fdef.shape = polygonShape;
                 body.createFixture(fdef);
                 polygonShape.dispose();
                 body.setUserData(this);
             }
         }
+    }
+
+    public PolygonShape createShape(){
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(
+                screenSize.x / 2 - Constants.EPS,
+                screenSize.y / 2 - Constants.EPS
+        );
+        return polygonShape;
     }
 
 //    //public final Vector2 getLocalPosition(){

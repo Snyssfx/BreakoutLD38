@@ -1,12 +1,10 @@
 package com.snyssfx.breakout;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -15,7 +13,6 @@ import com.snyssfx.breakout.Ball.BallBlue;
 import com.snyssfx.breakout.Ball.BallRed;
 import com.snyssfx.breakout.Player.PlayerBlue;
 import com.snyssfx.breakout.Player.PlayerRed;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 
 /**
  * Created by Snyss on 4/23/2017.
@@ -36,7 +33,6 @@ public class Level implements Disposable {
     public Array<Bound> bounds;
     public Pixmap pixmap;
     public Texture tex;
-    public Box2DDebugRenderer renderer;
 
     public Level(Vector2 pos, String levelName, Vector2 size, Color color){
         Init(pos, levelName, size, color);
@@ -53,8 +49,8 @@ public class Level implements Disposable {
 
         playerBlue = new PlayerBlue(size.cpy().scl(-0.5f).add(0, size.y / 2), this);
         playerRed = new PlayerRed(size.cpy().scl(0.5f).sub(0, size.y / 2), this);
-        ballBlue = new BallBlue(size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE.x * 3, 0), this);
-        ballRed = new BallRed(new Vector2(size.x / 2, size.y / 2).sub(Constants.BLOCKSIZE.x * 3, 0), this);
+        ballBlue = new BallBlue(new Vector2(-0.05f,0)/*size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE.x * 3, 0)*/, this);
+        ballRed = new BallRed(new Vector2(0.05f, 0)/*new Vector2(size.x / 2, size.y / 2).sub(Constants.BLOCKSIZE.x * 3, 0)*/, this);
 
         //blocks.add(new Block(Color.GREEN, this, Vector2.Zero.cpy()));
         makeBound();
@@ -85,7 +81,7 @@ public class Level implements Disposable {
                         .scl(Constants.BLOCKSIZE.x)
                         .sub(size.cpy().scl(0.5f));
                 if (curColor.equals(Color.BLACK)){
-                    blocks.add(new Block(Constants.BLOCK_COLOR, this, locPos.cpy()));
+                    blocks.add(new Block(Constants.COLOR_BLOCK, this, locPos.cpy()));
                 }
 //                if (curColor == Color.BLUE){
 //                    playerBlue = new PlayerBlue(locPos.cpy(), this);
@@ -115,8 +111,8 @@ public class Level implements Disposable {
                 1, 1,
                 0,
                 0, 0,
-                (int) tex.getWidth(),
-                (int) tex.getHeight(),
+                tex.getWidth(),
+                tex.getHeight(),
                 false,
                 false
         );

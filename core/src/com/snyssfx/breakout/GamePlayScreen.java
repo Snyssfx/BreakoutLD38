@@ -38,7 +38,7 @@ public class GamePlayScreen extends ScreenAdapter {
                         , 0.5f)
                 , "test2.png"
                 , Constants.LEVEL_1_SIZE
-                , Color.WHITE
+                , Constants.COLOR_LEVEL
         ));
 
 

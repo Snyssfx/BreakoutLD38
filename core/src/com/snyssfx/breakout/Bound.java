@@ -11,6 +11,6 @@ public class Bound extends ParentRectangle{
     public static final String TAG = Bound.class.getName();
 
     public Bound(Vector2 locPos, Level pLevel, Vector2 size){
-        super(locPos, pLevel, size, new Color(0, 0, 0, 0), BodyDef.BodyType.StaticBody);
+        super(locPos, pLevel, size, Constants.COLOR_BOUNDS, BodyDef.BodyType.StaticBody);
     }
 }

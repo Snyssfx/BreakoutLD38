@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Constants {
     public static final Vector2 BLOCKSIZE = new Vector2(0.025f, 0.05f);
-    public static final Color BLOCK_COLOR = Color.BROWN;
+    public static final Color COLOR_BLOCK = Color.BROWN;
+    public static final Color COLOR_LEVEL = Color.WHITE;
+    public static final Color COLOR_BOUNDS = new Color(0, 0, 0, 0);
 
     public static final float DENSITY = 1 / (BLOCKSIZE.x * 10);
     public static final float PLAYER_VELOCITY = 1000.0f * BLOCKSIZE.x;
@@ -21,7 +23,13 @@ public class Constants {
     public static final Vector2 LEVEL_2_SIZE = new Vector2(55 * BLOCKSIZE.x, 7 * BLOCKSIZE.y);
     public static final Vector2 LEVEL_3_SIZE = new Vector2(40 * BLOCKSIZE.x, 5 * BLOCKSIZE.y);
     public static final Vector2 LEVEL_4_SIZE = new Vector2(25 * BLOCKSIZE.x, 3 * BLOCKSIZE.y);
-    public static final Vector2 LEVEL_5_SIZE = new Vector2(10 * BLOCKSIZE.x, 2 * BLOCKSIZE.y);
+    public static final Vector2 LEVEL_5_SIZE = new Vector2(8 * BLOCKSIZE.x, 2 * BLOCKSIZE.y);
+
+    public static final Vector2 LEVEL_1_POS = new Vector2(0, 0.5f);
+    public static final Vector2 LEVEL_2_POS = new Vector2(0, -0.5f);
+    public static final Vector2 LEVEL_3_POS = new Vector2(0, -0.5f);
+    public static final Vector2 LEVEL_4_POS = new Vector2(0, -0.5f);
+    public static final Vector2 LEVEL_5_POS = new Vector2(0, -0.5f);
 
     public static final float PXPERMETER = 10 / BLOCKSIZE.x;
     public static final float METERPERPX = 1f / PXPERMETER;
