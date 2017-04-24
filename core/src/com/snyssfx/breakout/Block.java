@@ -2,6 +2,7 @@ package com.snyssfx.breakout;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,11 +16,9 @@ public class Block extends ParentRectangle {
 
     public boolean isActive;
 
-    public Block(Color color, int x, int y
-            , Level pLevel
-            , Vector2 localPosition)
+    public Block(Color color, Level pLevel, Vector2 localPosition)
     {
-        super(localPosition, pLevel, Constants.BLOCKSIZE, color, BodyDef.BodyType.DynamicBody);
+        super(localPosition, pLevel, Constants.BLOCKSIZE, color, BodyDef.BodyType.KinematicBody);
         isActive = true;
     }
 
@@ -30,7 +29,15 @@ public class Block extends ParentRectangle {
             pixmap.setColor(color);
             pixmap.fill();
             tex = new Texture(pixmap);
-            parentLevel.b2world.destroyBody(body);
+            body.getFixtureList().get(0).setSensor(true);
+            //body.setActive(false);
+            //parentLevel.b2world.destroyBody(body);
         }
     }
+//
+//    @Override
+//    public void render(SpriteBatch render){
+//        super.render(render);
+//
+//    }
 }

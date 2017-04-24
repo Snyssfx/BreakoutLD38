@@ -39,18 +39,25 @@ public class Level implements Disposable {
     public Box2DDebugRenderer renderer;
 
     public Level(Vector2 pos, String levelName, Vector2 size, Color color){
-        position = pos;
-        this.size = new Vector2(size);
-        b2world = new World(Vector2.Zero, false);
+        Init(pos, levelName, size, color);
+    }
+
+    public void Init(Vector2 pos, String levelName, Vector2 size, Color color){
+
+        position = pos.cpy();
+        this.size = size.cpy();
+        if (b2world != null) b2world.dispose();
+        b2world = new World(Vector2.Zero.cpy(), false);
         b2world.setContactListener(new NewContactListener());
         blocks = new Array<Block>();
-        playerBlue = new PlayerBlue(size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE).add(0, size.y / 2), this);
-        playerRed = new PlayerRed(size.cpy().scl(0.5f).sub(Constants.BLOCKSIZE).sub(0, size.y / 2), this);
-        ballBlue = new BallBlue(size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE.scl(3.0f)), this);
 
-        blocks.add(new Block(Color.GREEN, 0, 0, this, Vector2.Zero));
+        playerBlue = new PlayerBlue(size.cpy().scl(-0.5f).add(0, size.y / 2), this);
+        playerRed = new PlayerRed(size.cpy().scl(0.5f).sub(0, size.y / 2), this);
+        ballBlue = new BallBlue(size.cpy().scl(-0.5f).add(Constants.BLOCKSIZE.x * 3, 0), this);
+        ballRed = new BallRed(new Vector2(size.x / 2, size.y / 2).sub(Constants.BLOCKSIZE.x * 3, 0), this);
+
+        //blocks.add(new Block(Color.GREEN, this, Vector2.Zero.cpy()));
         makeBound();
-        //pos.scl(size);
         pixmap = new Pixmap(
                 (int) ((size.x) * Constants.PXPERMETER),
                 (int) ((size.y) * Constants.PXPERMETER),
@@ -61,32 +68,40 @@ public class Level implements Disposable {
         pixmap.fill();
         tex = new Texture(pixmap);
 
-        //Init(levelName);
+        createLevelFromPicture(levelName);
 
     }
 
-    public void Init(String levelName){
-
-        //create level from picture
+    public void createLevelFromPicture(String levelName){
         Pixmap pixmap = new Pixmap(Gdx.files.internal(levelName));
         Vector2 pictureSize = new Vector2(pixmap.getWidth(), pixmap.getHeight());
-        for(int y = 0; y < pictureSize.y; y++)
+        for(int y = (int)pictureSize.y - 1; y > 0 ; y--)
             for (int x = 0; x < pictureSize.x; x++){
                 int curPixel = pixmap.getPixel(x, y);
-                Color curColor = null;
-                Color.rgba8888ToColor(curColor, curPixel);
+                Color curColor = new Color(curPixel);
 
-                //yellow = blocks, red = playerRed, blue = playerBlue
-
+                //black = blocks, red = playerRed, blue = playerBlue
+                Vector2 locPos = new Vector2(pixmap.getWidth() - x, pixmap.getHeight() - y)
+                        .scl(Constants.BLOCKSIZE.x)
+                        .sub(size.cpy().scl(0.5f));
+                if (curColor.equals(Color.BLACK)){
+                    blocks.add(new Block(Constants.BLOCK_COLOR, this, locPos.cpy()));
+                }
+//                if (curColor == Color.BLUE){
+//                    playerBlue = new PlayerBlue(locPos.cpy(), this);
+//                }
+//                if (curColor == Color.RED){
+//                    playerRed = new PlayerRed(locPos.cpy(), this);
+//                }
             }
     }
 
     public void makeBound(){
         bounds = new Array<Bound>();
-        bounds.add(new Bound(Vector2.Zero.cpy().sub(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
-        bounds.add(new Bound(Vector2.Zero.cpy().add(0, size.y / 2), this, new Vector2(size.x, Constants.EPS)));
-        bounds.add(new Bound(Vector2.Zero.cpy().sub(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
-        bounds.add(new Bound(Vector2.Zero.cpy().add(size.x / 2, 0), this, new Vector2(Constants.EPS, size.y)));
+        bounds.add(new Bound(Vector2.Zero.cpy().sub(0, size.y / 2), this, new Vector2(size.x + Constants.BLOCKSIZE.x * 2, Constants.EPS)));
+        bounds.add(new Bound(Vector2.Zero.cpy().add(0, size.y / 2), this, new Vector2(size.x + Constants.BLOCKSIZE.x * 2, Constants.EPS)));
+        bounds.add(new Bound(Vector2.Zero.cpy().sub(size.x / 2, 0).sub(Constants.BLOCKSIZE.x, 0), this, new Vector2(Constants.EPS, size.y)));
+        bounds.add(new Bound(Vector2.Zero.cpy().add(size.x / 2, 0).add(Constants.BLOCKSIZE.x, 0), this, new Vector2(Constants.EPS, size.y)));
     }
 
     public void Render(SpriteBatch batch){
@@ -109,10 +124,11 @@ public class Level implements Disposable {
             b.render(batch);
         for (Bound b: bounds)
             b.render(batch);
-        playerBlue.render(batch);
-        playerRed.render(batch);
         ballBlue.render(batch);
-        //ballRed.render(batch);
+        playerRed.render(batch);
+        playerBlue.render(batch);
+        ballRed.render(batch);
+        ballBlue.render(batch); //render twice??
     }
 
     public void Update(float delta){
@@ -120,7 +136,7 @@ public class Level implements Disposable {
         playerBlue.Update(delta);
         playerRed.Update(delta);
         ballBlue.Update(delta);
-//        ballRed.Update(delta);
+        ballRed.Update(delta);
     }
 
     @Override

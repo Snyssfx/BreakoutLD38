@@ -27,11 +27,11 @@ public class NewContactListener implements ContactListener {
     public void postSolve (Contact contact, ContactImpulse impulse){
 
         Object bA = contact.getFixtureA().getBody().getUserData();
-        if (bA.getClass().toString().equals("Block"))
+        if (bA != null && bA instanceof Block)
             ((Block)bA).setActive(false);
 
-        Object bB = contact.getFixtureA().getBody().getUserData();
-        if (bB.getClass().toString().equals("Block"))
+        Object bB = contact.getFixtureB().getBody().getUserData();
+        if (bB != null && bB instanceof Block)
             ((Block)bB).setActive(false);
     }
 }

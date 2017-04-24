@@ -36,12 +36,10 @@ public class ParentRectangle {
     {
         this.localPosition = new Vector2(locPos);
         this.parentLevel = pLevel;
-        //this.globalPosition = localPosition.add(pLevel.position);
         this.color = color;
         this.screenSize = new Vector2(screenSize);
 
         {//screen part
-            //localPosition.scl(screenSize);
             pixmap = new Pixmap(
                     (int) ((screenSize.x) * Constants.PXPERMETER),
                     (int) ((screenSize.y) * Constants.PXPERMETER),
@@ -57,9 +55,11 @@ public class ParentRectangle {
             def.type = type;
             def.position.set(localPosition);
             body = parentLevel.b2world.createBody(def);
+            body.setFixedRotation(true);
             {
                 FixtureDef fdef = new FixtureDef();
                 fdef.density = Constants.DENSITY;
+                fdef.restitution = 1.0f;
                 PolygonShape polygonShape = new PolygonShape();
                 polygonShape.setAsBox(
                         screenSize.x / 2 - Constants.EPS,
@@ -73,11 +73,11 @@ public class ParentRectangle {
         }
     }
 
-    public final Vector2 getLocalPosition(){
-        return localPosition;
-    }
+//    //public final Vector2 getLocalPosition(){
+//        return localPosition;
+//    }
     public final Vector2 getGlobalPosition(){
-        return localPosition.add(parentLevel.position);
+        return localPosition.cpy().add(parentLevel.position);
     }
 
     public void render(SpriteBatch render) {
@@ -89,10 +89,10 @@ public class ParentRectangle {
                 tex.getWidth() * Constants.METERPERPX,
                 tex.getHeight() * Constants.METERPERPX,
                 1, 1,
-                body.getAngle() * MathUtils.radiansToDegrees,
+                0,
                 0, 0,
-                (int) (Constants.BLOCKSIZE.x * Constants.PXPERMETER),
-                (int) (Constants.BLOCKSIZE.y * Constants.PXPERMETER),
+                (int) (screenSize.x * Constants.PXPERMETER),
+                (int) (screenSize.y * Constants.PXPERMETER),
                 false,
                 false
         );

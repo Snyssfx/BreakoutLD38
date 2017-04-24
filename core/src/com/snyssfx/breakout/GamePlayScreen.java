@@ -23,6 +23,7 @@ public class GamePlayScreen extends ScreenAdapter {
     SpriteBatch batch;
     Array<Level> levels;
     Box2DDebugRenderer renderer;
+    int curLevel;
 
     @Override
     public void show() {
@@ -34,14 +35,26 @@ public class GamePlayScreen extends ScreenAdapter {
         levels = new Array<Level>();
         levels.add(new Level(
                 new Vector2(0
-                        , 1.0f)
-                , "test"
+                        , 0.5f)
+                , "test2.png"
                 , Constants.LEVEL_1_SIZE
-                , Color.WHITE));
+                , Color.WHITE
+        ));
+
+
+
+        levels.add(new Level(
+                new Vector2(0, -0.5f)
+                , "level5.png"
+                , Constants.LEVEL_5_SIZE
+                , Color.WHITE
+        ));
 
         if (Gdx.app.getLogLevel() == Application.LOG_DEBUG){
             renderer = new Box2DDebugRenderer();
+
         }
+        curLevel = 1;
     }
 
     @Override
@@ -53,17 +66,17 @@ public class GamePlayScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
-        levels.get(0).Update(delta);
+        levels.get(curLevel).Update(delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        levels.get(0).Render(batch);
+        levels.get(curLevel).Render(batch);
 
         if (Gdx.app.getLogLevel() == Application.LOG_DEBUG){
-            renderer.render(levels.get(0).b2world, camera.combined);
+            renderer.render(levels.get(curLevel).b2world, camera.combined);
         }
 
         batch.end();

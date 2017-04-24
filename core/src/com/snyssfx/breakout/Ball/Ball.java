@@ -16,8 +16,6 @@ public abstract class Ball extends ParentRectangle {
 
     public Ball(Vector2 locPos, Level pLevel, Color color){
         super(locPos, pLevel, Constants.BALL_SIZE, color, BodyDef.BodyType.DynamicBody);
-        body.setFixedRotation(true);
-        body.getFixtureList().get(0).setRestitution(1.0f);
         body.setBullet(true);
         //Gdx.app.debug(TAG,);
     }
