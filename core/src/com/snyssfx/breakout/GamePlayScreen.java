@@ -34,27 +34,44 @@ public class GamePlayScreen extends ScreenAdapter {
         fitViewport = new FitViewport(Constants.VIEWPORT.x, Constants.VIEWPORT.y, camera);
         levels = new Array<Level>();
         levels.add(new Level(
-                new Vector2(0
-                        , 0.5f)
-                , "test2.png"
+                Constants.LEVEL_1_POS
+                , "level1.png"
                 , Constants.LEVEL_1_SIZE
                 , Constants.COLOR_LEVEL
         ));
 
-
+        levels.add(new Level(
+                Constants.LEVEL_2_POS
+                , "level2.png"
+                , Constants.LEVEL_2_SIZE
+                , Constants.COLOR_LEVEL
+        ));
 
         levels.add(new Level(
-                new Vector2(0, -0.5f)
+                Constants.LEVEL_3_POS
+                , "level3.png"
+                , Constants.LEVEL_3_SIZE
+                , Constants.COLOR_LEVEL
+        ));
+
+        levels.add(new Level(
+                Constants.LEVEL_4_POS
+                , "level4.png"
+                , Constants.LEVEL_4_SIZE
+                , Constants.COLOR_LEVEL
+        ));
+
+        levels.add(new Level(
+                Constants.LEVEL_5_POS
                 , "level5.png"
                 , Constants.LEVEL_5_SIZE
-                , Color.WHITE
+                , Constants.COLOR_LEVEL
         ));
 
         if (Gdx.app.getLogLevel() == Application.LOG_DEBUG){
             renderer = new Box2DDebugRenderer();
-
         }
-        curLevel = 1;
+        curLevel = 2;
     }
 
     @Override
@@ -66,6 +83,7 @@ public class GamePlayScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
+        if (levels.get(curLevel).pixmap == null) levels.get(curLevel).Init();
         levels.get(curLevel).Update(delta);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);

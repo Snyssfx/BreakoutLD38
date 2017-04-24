@@ -15,4 +15,10 @@ public class BallRed extends Ball{
         super(locPos, pLevel, Color.RED);
         body.applyForceToCenter(-Constants.BALL_SPEED, 0, true);
     }
+
+    @Override
+    public void reset(){
+        //body.setTransform(parentLevel.playerRed.localPosition.cpy().sub(Constants.BLOCKSIZE.x * 2, 0), 0);
+        body.applyForceToCenter(-Constants.BALL_SPEED, 0, true);
+    }
 }

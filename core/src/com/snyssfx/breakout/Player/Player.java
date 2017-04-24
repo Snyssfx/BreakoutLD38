@@ -53,4 +53,22 @@ public abstract class Player extends ParentRectangle {
             body.setTransform(body.getPosition().x
                     , parentLevel.bounds.get(0).localPosition.y + Constants.EPS + Constants.PLAYER_SIZE_ON_START.y / 2, 0);
     }
+
+    @Override
+    public PolygonShape createShape(){
+        PolygonShape polygonShape = new PolygonShape();
+        Vector2[] vertices = new Vector2[8];
+        vertices[0] = new Vector2( screenSize.x / 4, -screenSize.y / 2);
+        vertices[1] = new Vector2(-screenSize.x / 4, -screenSize.y / 2);
+        vertices[2] = new Vector2(-screenSize.x / 2, -screenSize.y / 4);
+        vertices[3] = new Vector2(-screenSize.x / 2,  screenSize.y / 4);
+
+        vertices[4] = new Vector2(-screenSize.x / 4,  screenSize.y / 2);
+        vertices[5] = new Vector2( screenSize.x / 4,  screenSize.y / 2);
+        vertices[6] = new Vector2( screenSize.x / 2,  screenSize.y / 4);
+        vertices[7] = new Vector2( screenSize.x / 2, -screenSize.y / 4);
+
+        polygonShape.set(vertices);
+        return polygonShape;
+    }
 }

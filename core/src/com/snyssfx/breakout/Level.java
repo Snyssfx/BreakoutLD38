@@ -33,15 +33,16 @@ public class Level implements Disposable {
     public Array<Bound> bounds;
     public Pixmap pixmap;
     public Texture tex;
+    public String levelName;
 
     public Level(Vector2 pos, String levelName, Vector2 size, Color color){
-        Init(pos, levelName, size, color);
-    }
-
-    public void Init(Vector2 pos, String levelName, Vector2 size, Color color){
-
         position = pos.cpy();
         this.size = size.cpy();
+        this.levelName = levelName;
+        this.color = color;
+    }
+
+    public void Init(){
         if (b2world != null) b2world.dispose();
         b2world = new World(Vector2.Zero.cpy(), false);
         b2world.setContactListener(new NewContactListener());
@@ -98,6 +99,8 @@ public class Level implements Disposable {
         bounds.add(new Bound(Vector2.Zero.cpy().add(0, size.y / 2), this, new Vector2(size.x + Constants.BLOCKSIZE.x * 2, Constants.EPS)));
         bounds.add(new Bound(Vector2.Zero.cpy().sub(size.x / 2, 0).sub(Constants.BLOCKSIZE.x, 0), this, new Vector2(Constants.EPS, size.y)));
         bounds.add(new Bound(Vector2.Zero.cpy().add(size.x / 2, 0).add(Constants.BLOCKSIZE.x, 0), this, new Vector2(Constants.EPS, size.y)));
+        //bounds.get(2).body.getFixtureList().get(0).setSensor(true);
+        //bounds.get(3).body.getFixtureList().get(0).setSensor(true);
     }
 
     public void Render(SpriteBatch batch){

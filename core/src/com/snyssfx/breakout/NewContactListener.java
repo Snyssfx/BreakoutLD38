@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.snyssfx.breakout.Ball.Ball;
 
 /**
  * Created by Snyss on 4/23/2017.
@@ -33,5 +34,11 @@ public class NewContactListener implements ContactListener {
         Object bB = contact.getFixtureB().getBody().getUserData();
         if (bB != null && bB instanceof Block)
             ((Block)bB).setActive(false);
+        if (bA != null && bA instanceof Bound && ((Bound) bA).screenSize.x <= 2 * Constants.EPS){
+            ((Ball)bB).reset();
+        }
+        if (bB != null && bB instanceof Bound && ((Bound) bB).screenSize.x <= 2 * Constants.EPS){
+            ((Ball)bA).reset();
+        }
     }
 }

@@ -15,4 +15,10 @@ public class BallBlue extends Ball{
         super(locPos, pLevel, Color.BLUE);
         body.applyForceToCenter(Constants.BALL_SPEED, 0, true);
     }
+
+    @Override
+    public void reset(){
+        //body.setTransform(parentLevel.playerBlue.localPosition.cpy().add(Constants.BLOCKSIZE.x * 2, 0), 0);
+        body.applyForceToCenter(Constants.BALL_SPEED, 0, true);
+    }
 }
