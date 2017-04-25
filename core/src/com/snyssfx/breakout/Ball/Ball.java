@@ -30,28 +30,28 @@ public abstract class Ball extends ParentRectangle {
         Vector2 vel = body.getLinearVelocity();
         float impulse = (vel.len() - Constants.BALL_SPEED) * body.getMass();
         body.applyLinearImpulse(vel.nor().scl(-impulse), body.getWorldCenter(), true);
-        localPosition = body.getPosition();
-
+        super.Update(delta);
     }
 
     @Override
     public PolygonShape createShape(){
         PolygonShape polygonShape = new PolygonShape();
-        Vector2[] vertices = new Vector2[4];
-        vertices[0] = new Vector2(screenSize.x / 2, 0);
-        vertices[1] = new Vector2(0, -screenSize.y / 2);
-        vertices[2] = new Vector2(-screenSize.x / 2, 0);
-        vertices[3] = new Vector2(0, screenSize.y / 2);
+//        Vector2[] vertices = new Vector2[4];
+//        vertices[0] = new Vector2(screenSize.x / 2, 0);
+//        vertices[1] = new Vector2(0, -screenSize.y / 2);
+//        vertices[2] = new Vector2(-screenSize.x / 2, 0);
+//        vertices[3] = new Vector2(0, screenSize.y / 2);
 
-//        vertices[0] = new Vector2( screenSize.x / 4, -screenSize.y / 2);
-//        vertices[1] = new Vector2(-screenSize.x / 4, -screenSize.y / 2);
-//        vertices[2] = new Vector2(-screenSize.x / 2, -screenSize.y / 4);
-//        vertices[3] = new Vector2(-screenSize.x / 2,  screenSize.y / 4);
-//
-//        vertices[4] = new Vector2(-screenSize.x / 4,  screenSize.y / 2);
-//        vertices[5] = new Vector2( screenSize.x / 4,  screenSize.y / 2);
-//        vertices[6] = new Vector2( screenSize.x / 2,  screenSize.y / 4);
-//        vertices[7] = new Vector2( screenSize.x / 2, -screenSize.y / 4);
+        Vector2[] vertices = new Vector2[8];
+        vertices[0] = new Vector2( screenSize.x / 6, -screenSize.y / 2);
+        vertices[1] = new Vector2(-screenSize.x / 6, -screenSize.y / 2);
+        vertices[2] = new Vector2(-screenSize.x / 2, -screenSize.y / 6);
+        vertices[3] = new Vector2(-screenSize.x / 2,  screenSize.y / 6);
+
+        vertices[4] = new Vector2(-screenSize.x / 6,  screenSize.y / 2);
+        vertices[5] = new Vector2( screenSize.x / 6,  screenSize.y / 2);
+        vertices[6] = new Vector2( screenSize.x / 2,  screenSize.y / 6);
+        vertices[7] = new Vector2( screenSize.x / 2, -screenSize.y / 6);
 
         polygonShape.set(vertices);
         return polygonShape;

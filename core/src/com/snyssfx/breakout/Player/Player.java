@@ -40,7 +40,8 @@ public abstract class Player extends ParentRectangle {
             body.setLinearVelocity(0, -Constants.PLAYER_VELOCITY * delta);
 
         CheckBounds();
-        localPosition = body.getPosition();
+        super.Update(delta);
+        //localPosition = body.getPosition();
     }
 
     public void CheckBounds(){

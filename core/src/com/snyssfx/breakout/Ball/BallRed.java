@@ -13,6 +13,7 @@ public class BallRed extends Ball{
 
     public BallRed(Vector2 locPos, Level pLevel){
         super(locPos, pLevel, Color.RED);
+        body.setTransform(parentLevel.playerRed.localPosition.cpy().sub(Constants.BLOCKSIZE.x * 2, 0), 0);
         body.applyForceToCenter(-Constants.BALL_SPEED, 0, true);
     }
 

@@ -24,10 +24,11 @@ public class GamePlayScreen extends ScreenAdapter {
     Array<Level> levels;
     Box2DDebugRenderer renderer;
     int curLevel;
+    boolean isEnd = false;
 
     @Override
     public void show() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Gdx.app.setLogLevel(Application.LOG_NONE);
 
         batch = new SpriteBatch();
         camera = new OrthographicCamera(Constants.VIEWPORT.x, Constants.VIEWPORT.y);
@@ -71,7 +72,7 @@ public class GamePlayScreen extends ScreenAdapter {
         if (Gdx.app.getLogLevel() == Application.LOG_DEBUG){
             renderer = new Box2DDebugRenderer();
         }
-        curLevel = 2;
+        curLevel = 0;
     }
 
     @Override
@@ -83,15 +84,36 @@ public class GamePlayScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
-        if (levels.get(curLevel).pixmap == null) levels.get(curLevel).Init();
-        levels.get(curLevel).Update(delta);
+
+
+        Level lvl = levels.get(curLevel);
+        if (lvl.pixmap == null) lvl.Init();
+
+        lvl.Update(delta);
+        if (isEnd){
+            lvl.isWin = false;
+        }
+        if (lvl.isWin){
+            curLevel++;
+            if (curLevel == 5) {
+                isEnd = true;
+                curLevel = 4;
+            } else
+                lvl.b2world.dispose();
+            return;
+        }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        levels.get(curLevel).Render(batch);
+        for (int i = 0; i <= curLevel; i++) {
+            levels.get(i).Render(batch);
+        }
+        if (isEnd){
+            lvl.Render(batch);
+        }
 
         if (Gdx.app.getLogLevel() == Application.LOG_DEBUG){
             renderer.render(levels.get(curLevel).b2world, camera.combined);

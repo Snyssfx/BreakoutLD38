@@ -13,6 +13,7 @@ public class BallBlue extends Ball{
 
     public BallBlue(Vector2 locPos, Level pLevel){
         super(locPos, pLevel, Color.BLUE);
+        body.setTransform(parentLevel.playerBlue.localPosition.cpy().add(Constants.BLOCKSIZE.x * 2, 0), 0);
         body.applyForceToCenter(Constants.BALL_SPEED, 0, true);
     }
 

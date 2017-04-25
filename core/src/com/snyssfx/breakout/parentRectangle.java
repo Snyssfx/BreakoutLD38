@@ -85,10 +85,14 @@ public class ParentRectangle {
         return localPosition.cpy().add(parentLevel.position);
     }
 
+    public void Update(float delta){
+        localPosition = body.getPosition();
+    }
+
     public void render(SpriteBatch render) {
         render.draw(tex,
-                parentLevel.position.x + body.getPosition().x - tex.getWidth() / 2 * Constants.METERPERPX,
-                parentLevel.position.y + body.getPosition().y - tex.getHeight() / 2 * Constants.METERPERPX,
+                parentLevel.position.x + localPosition.x - tex.getWidth() / 2 * Constants.METERPERPX,
+                parentLevel.position.y + localPosition.y - tex.getHeight() / 2 * Constants.METERPERPX,
                 tex.getWidth() / 2 * Constants.METERPERPX,
                 tex.getHeight() / 2 * Constants.METERPERPX,
                 tex.getWidth() * Constants.METERPERPX,
